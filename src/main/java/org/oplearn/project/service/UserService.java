@@ -4,15 +4,14 @@ import org.oplearn.project.dto.request.UserRequest;
 import org.oplearn.project.dto.response.PageResponse;
 import org.oplearn.project.dto.response.UserResponse;
 
-import java.util.List;
-
 public interface UserService {
   UserResponse create(UserRequest request);
 
-  UserResponse update(UserRequest request, String id);
+  UserResponse update(UserRequest request, Long id);
 
-  void delete(String id);
-  List<UserResponse> list(String keyword, int size, int page, boolean isAll);
+  void delete(Long id);
 
-  UserResponse detail(String id);
+  PageResponse<UserResponse> list(String keyword, int size, int page, boolean isAll);
+
+  UserResponse detail(Long id);
 }

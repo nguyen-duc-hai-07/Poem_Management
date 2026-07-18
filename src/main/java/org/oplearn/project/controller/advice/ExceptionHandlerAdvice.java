@@ -1,12 +1,11 @@
 package org.oplearn.project.controller.advice;
 
-
-import org.oplearn.project.dto.response.Error;
-import org.oplearn.project.dto.response.ResponseGeneral;
-import org.oplearn.project.exception.base.BaseException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.oplearn.project.dto.response.Error;
+import org.oplearn.project.dto.response.ResponseGeneral;
+import org.oplearn.project.exception.base.BaseException;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,10 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
-import static org.oplearn.project.constanst.OpLearnConstants.CommonConstants.*;
+import static org.oplearn.project.constants.OpLearnConstants.CommonConstants.DEFAULT_LANGUAGE;
+import static org.oplearn.project.constants.OpLearnConstants.CommonConstants.LANGUAGE;
+import static org.oplearn.project.constants.OpLearnConstants.CommonConstants.PERCENT;
+import static org.oplearn.project.constants.OpLearnConstants.MessageException.DEFAULT_CODE_SERVER_ERROR;
 
 @Slf4j
 @RestControllerAdvice
@@ -27,11 +29,12 @@ import static org.oplearn.project.constanst.OpLearnConstants.CommonConstants.*;
 public class ExceptionHandlerAdvice {
   private final MessageSource messageSource;
 
-  @ExceptionHandler(value = {BaseException.class})
-  public ResponseEntity<ResponseGeneral<Error>> handleFinanceBaseException(
+  @ExceptionHandler(BaseException.class)
+  public ResponseEntity<ResponseGeneral<Error>> handleBaseException(
         BaseException ex,
         WebRequest webRequest
   ) {
+    log.error("(handleBaseException) code: {}, status: {}", ex.getCode(), ex.getStatus());
     return ResponseEntity
           .status(ex.getStatus())
           .body(getError(ex.getStatus(), ex.getCode(), webRequest.getLocale(), ex.getParams()));
@@ -42,19 +45,15 @@ public class ExceptionHandlerAdvice {
         MethodArgumentNotValidException exception,
         WebRequest webRequest
   ) {
-    log.error("(handleValidationExceptions)exception: {}", exception.getMessage());
-    String language = Objects.nonNull(webRequest.getHeader(LANGUAGE)) ?
-          webRequest.getHeader(LANGUAGE) : DEFAULT_LANGUAGE;
-
     String errorMessage = exception.getBindingResult().getFieldErrors().stream()
           .map(fieldError -> fieldError.getDefaultMessage())
           .findFirst()
           .orElse(exception.getMessage());
 
-    log.error("(handleValidationExceptions) {}", errorMessage);
+    log.error("(handleValidationExceptions) message: {}", errorMessage);
     return ResponseEntity
           .status(HttpStatus.BAD_REQUEST)
-          .body(getError(HttpStatus.BAD_REQUEST.value(), errorMessage, language));
+          .body(getError(HttpStatus.BAD_REQUEST.value(), errorMessage, getLanguage(webRequest)));
   }
 
   @ExceptionHandler(ConstraintViolationException.class)
@@ -62,19 +61,35 @@ public class ExceptionHandlerAdvice {
         ConstraintViolationException exception,
         WebRequest webRequest
   ) {
-    log.error("(handleConstraintViolationExceptions) exception: {}", exception.getMessage());
-    String language = Objects.nonNull(webRequest.getHeader(LANGUAGE)) ?
-          webRequest.getHeader(LANGUAGE) : DEFAULT_LANGUAGE;
-
     String errorMessage = exception.getConstraintViolations().stream()
           .map(constraintViolation -> constraintViolation.getMessage())
           .findFirst()
           .orElse(exception.getMessage());
 
-    log.error("(handleConstraintViolationExceptions) {}", errorMessage);
+    log.error("(handleConstraintViolationExceptions) message: {}", errorMessage);
     return ResponseEntity
           .status(HttpStatus.BAD_REQUEST)
-          .body(getError(HttpStatus.BAD_REQUEST.value(), errorMessage, language));
+          .body(getError(HttpStatus.BAD_REQUEST.value(), errorMessage, getLanguage(webRequest)));
+  }
+
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<ResponseGeneral<Error>> handleUnexpectedException(
+        Exception exception,
+        WebRequest webRequest
+  ) {
+    log.error("(handleUnexpectedException) unexpected error", exception);
+    return ResponseEntity
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .body(getError(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                DEFAULT_CODE_SERVER_ERROR,
+                getLanguage(webRequest)
+          ));
+  }
+
+  private String getLanguage(WebRequest webRequest) {
+    return Objects.nonNull(webRequest.getHeader(LANGUAGE)) ?
+          webRequest.getHeader(LANGUAGE) : DEFAULT_LANGUAGE;
   }
 
   private ResponseGeneral<Error> getError(int status, String code, String language) {
@@ -82,14 +97,6 @@ public class ExceptionHandlerAdvice {
           status,
           HttpStatus.valueOf(status).getReasonPhrase(),
           Error.of(code, getMessage(code, new Locale(language)))
-    );
-  }
-
-  private ResponseGeneral<Error> getError(int status, String code, Map<String, String> params) {
-    return ResponseGeneral.of(
-          status,
-          HttpStatus.valueOf(status).getReasonPhrase(),
-          Error.of(code, params)
     );
   }
 

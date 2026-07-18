@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <!-- Seed account for first login (password: admin123 - CHANGE IT in real environments) -->
+    <changeSet id="007-seed-admin-user" author="oplearn-base">
+        <preConditions onFail="MARK_RAN">
+            <sqlCheck expectedResult="0">SELECT count(*) FROM users WHERE username = 'admin'</sqlCheck>
+        </preConditions>
+        <insert tableName="users">
+            <column name="username" value="admin"/>
+            <column name="password" value="$2a$10$iq0RLCoAk.C0yMWmFcb3yO0yBsiHjfvDhUW2c0HXG2IRyDofbpQ0q"/>
+            <column name="name" value="Administrator"/>
+            <column name="role" value="ADMIN"/>
+            <column name="is_deleted" valueBoolean="false"/>
+            <column name="created_by" value="SYSTEM"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

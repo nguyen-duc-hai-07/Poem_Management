@@ -1,8 +1,6 @@
 package org.oplearn.project.dto.response;
 
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
-import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import org.oplearn.project.utils.DateUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +10,6 @@ import org.springframework.http.HttpStatus;
 @Data
 @AllArgsConstructor(staticName = "of")
 @NoArgsConstructor
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ResponseGeneral<T> {
   private int status;
   private String message;

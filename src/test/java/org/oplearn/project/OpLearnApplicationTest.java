@@ -8,5 +8,4 @@ class OpLearnApplicationTest {
   @Test
   void contextLoads() {
   }
-
 }

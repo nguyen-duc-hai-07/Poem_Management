@@ -1,12 +1,12 @@
 package org.oplearn.project.exception.base;
 
-
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.oplearn.project.constanst.OpLearnConstants.CommonConstants.*;
-import static org.oplearn.project.constanst.OpLearnConstants.MessageException.DEFAULT_CODE_NOTFOUND;
-import static org.oplearn.project.constanst.OpLearnConstants.StatusException.NOT_FOUND;
+import static org.oplearn.project.constants.OpLearnConstants.CommonConstants.BLANK_MESSAGE;
+import static org.oplearn.project.constants.OpLearnConstants.CommonConstants.NOT_FOUND_MESSAGE;
+import static org.oplearn.project.constants.OpLearnConstants.MessageException.DEFAULT_CODE_NOTFOUND;
+import static org.oplearn.project.exception.base.StatusConstants.NOT_FOUND;
 
 public class NotFoundException extends BaseException {
 

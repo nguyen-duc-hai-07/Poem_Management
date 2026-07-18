@@ -1,16 +1,16 @@
 package org.oplearn.project.utils;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 public class DateUtils {
   private DateUtils() {
   }
 
   public static String getCurrentDateString() {
-    return LocalDate.now().toString();
+    return Instant.now().toString();
   }
 
-  public static Long currentTimeMillis() {
+  public static long currentTimeMillis() {
     return System.currentTimeMillis();
   }
 }

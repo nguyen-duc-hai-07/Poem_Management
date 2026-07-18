@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
-import static org.oplearn.project.constanst.OpLearnConstants.CommonConstants.ENCODING_UTF_8;
-import static org.oplearn.project.constanst.OpLearnConstants.CommonConstants.MESSAGE_SOURCE;
+import static org.oplearn.project.constants.OpLearnConstants.CommonConstants.ENCODING_UTF_8;
+import static org.oplearn.project.constants.OpLearnConstants.CommonConstants.MESSAGE_SOURCE;
 
 @Configuration
 public class MessageSourceConfiguration {

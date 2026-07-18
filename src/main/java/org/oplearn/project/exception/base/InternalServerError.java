@@ -2,11 +2,11 @@ package org.oplearn.project.exception.base;
 
 import java.util.Map;
 
-import static org.oplearn.project.constanst.OpLearnConstants.CommonConstants.BLANK_MESSAGE;
-import static org.oplearn.project.constanst.OpLearnConstants.MessageException.DEFAULT_CODE_SERVER_ERROR;
+import static org.oplearn.project.constants.OpLearnConstants.CommonConstants.BLANK_MESSAGE;
+import static org.oplearn.project.constants.OpLearnConstants.MessageException.DEFAULT_CODE_SERVER_ERROR;
 import static org.oplearn.project.exception.base.StatusConstants.SERVER_ERROR;
 
-public class InternalServerError extends BaseException{
+public class InternalServerError extends BaseException {
   public InternalServerError(String code, String message, Map<String, String> params) {
     super(code, message, SERVER_ERROR, params);
   }

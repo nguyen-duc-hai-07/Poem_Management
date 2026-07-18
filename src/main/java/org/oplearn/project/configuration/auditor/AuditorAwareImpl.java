@@ -7,8 +7,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Objects;
 import java.util.Optional;
 
-import static org.oplearn.project.constanst.OpLearnConstants.AuditorConstant.ANONYMOUS;
-import static org.oplearn.project.constanst.OpLearnConstants.AuditorConstant.SYSTEM;
+import static org.oplearn.project.constants.OpLearnConstants.AuditorConstant.ANONYMOUS;
+import static org.oplearn.project.constants.OpLearnConstants.AuditorConstant.SYSTEM;
 
 public class AuditorAwareImpl implements AuditorAware<String> {
 
@@ -16,13 +16,11 @@ public class AuditorAwareImpl implements AuditorAware<String> {
   public Optional<String> getCurrentAuditor() {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-    if (Objects.nonNull(authentication) && !isAnonymous()) {
-      return Optional.ofNullable(authentication.getPrincipal().toString());
+    if (Objects.isNull(authentication)
+          || !authentication.isAuthenticated()
+          || ANONYMOUS.equals(authentication.getName())) {
+      return Optional.of(SYSTEM);
     }
-    return Optional.of(SYSTEM);
-  }
-
-  private boolean isAnonymous() {
-    return SecurityContextHolder.getContext().getAuthentication().getName().equals(ANONYMOUS);
+    return Optional.of(authentication.getName());
   }
 }
