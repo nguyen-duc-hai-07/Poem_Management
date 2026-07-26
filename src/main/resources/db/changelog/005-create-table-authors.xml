@@ -1,0 +1,36 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+  <changeSet id="005-create-authors" author="hazi">
+    <createTable tableName="authors">
+      <column name="id" type="BIGSERIAL">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="name" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="birth_year" type="INT"/>
+
+      <column name="achievement" type="TEXT"/>
+
+      <column name="hometown" type="VARCHAR(255)"/>
+
+      <column name="is_deleted"
+              type="BOOLEAN"
+              defaultValueBoolean="false"/>
+
+      <!-- Bổ sung thêm các cột Audit để không bị lỗi nếu project vẫn dùng chung class BaseEntity -->
+      <column name="created_by" type="VARCHAR(255)"/>
+      <column name="created_at" type="TIMESTAMP"/>
+      <column name="updated_by" type="VARCHAR(255)"/>
+      <column name="updated_at" type="TIMESTAMP"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

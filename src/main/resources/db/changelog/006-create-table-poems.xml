@@ -1,0 +1,48 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+  <changeSet id="006-create-poems" author="hazi">
+    <createTable tableName="poems">
+      <column name="id" type="BIGSERIAL">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="name" type="VARCHAR(255)">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="description" type="TEXT"/>
+
+      <column name="year" type="INT"/>
+
+      <column name="content" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="transliteration" type="TEXT"/>
+
+      <column name="translation" type="TEXT"/>
+
+      <column name="language" type="VARCHAR(50)"/>
+
+      <column name="genre_id" type="BIGINT">
+        <constraints foreignKeyName="fk_poems_genre" references="genres(id)"/>
+      </column>
+
+      <column name="author_id" type="BIGINT">
+        <constraints foreignKeyName="fk_poems_author" references="authors(id)"/>
+      </column>
+
+      <column name="is_deleted"
+              type="BOOLEAN"
+              defaultValueBoolean="false"/>
+
+      <column name="created_by" type="VARCHAR(255)"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

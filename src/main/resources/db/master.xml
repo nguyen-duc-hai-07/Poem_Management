@@ -5,12 +5,14 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <include file="db/changelog/001-create-table-users.xml"/>
-    <include file="db/changelog/002-create-table-authors.xml"/>
-    <include file="db/changelog/003-create-table-genres.xml"/>
-    <include file="db/changelog/004-create-table-poems.xml"/>
-    <include file="db/changelog/005-add-role-and-refresh-tokens.xml"/>
-    <include file="db/changelog/006-drop-table-refresh-tokens.xml"/>
-    <include file="db/changelog/007-seed-admin-user.xml"/>
+    <include file="db/changelog/001-create-table-enum.xml"/>
+    <include file="db/changelog/002-create-table-users.xml"/>
+    <include file="db/changelog/003-create-table-tokens.xml"/>
+    <include file="db/changelog/004-create-table-genres.xml"/>
+    <include file="db/changelog/005-create-table-authors.xml"/>
+    <include file="db/changelog/006-create-table-poems.xml"/>
+    <include file="db/changelog/007-create-table-comments.xml"/>
+    <include file="db/changelog/008-create-table-replies.xml"/>
+    <include file="db/changelog/009-create-table-feedbacks.xml"/>
 
 </databaseChangeLog>

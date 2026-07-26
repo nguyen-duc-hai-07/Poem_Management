@@ -1,0 +1,26 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+  <changeSet id="001-create-role-enum" author="hazi">
+    <sql>
+      CREATE TYPE role_enum AS ENUM ('ADMIN', 'USER');
+    </sql>
+  </changeSet>
+
+  <changeSet id="001-create-token-type-enum" author="hazi">
+    <sql>
+      CREATE TYPE token_type_enum AS ENUM ('ACCESS', 'REFRESH');
+    </sql>
+  </changeSet>
+
+  <changeSet id="001-create-feedback-status-enum" author="hazi">
+    <sql>
+      CREATE TYPE feedback_status_enum AS ENUM ('PENDING', 'RESOLVED', 'REJECTED');
+    </sql>
+  </changeSet>
+
+</databaseChangeLog>

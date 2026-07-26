@@ -1,0 +1,38 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+  <changeSet id="003-create-tokens" author="hazi">
+    <createTable tableName="tokens">
+      <column name="id" type="BIGSERIAL">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="token" type="VARCHAR(500)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+
+      <column name="is_revoked"
+              type="BOOLEAN"
+              defaultValueBoolean="false"/>
+
+      <column name="is_expired"
+              type="BOOLEAN"
+              defaultValueBoolean="false"/>
+
+      <column name="user_id" type="BIGINT">
+        <constraints nullable="false"
+                     foreignKeyName="fk_tokens_user_id"
+                     references="users(id)"/>
+      </column>
+
+      <column name="token_type" type="token_type_enum">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

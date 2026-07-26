@@ -1,0 +1,40 @@
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+  <changeSet id="008-create-replies" author="hazi">
+    <createTable tableName="replies">
+      <column name="id" type="BIGSERIAL">
+        <constraints primaryKey="true" nullable="false"/>
+      </column>
+
+      <column name="content" type="TEXT">
+        <constraints nullable="false"/>
+      </column>
+
+      <column name="user_id" type="BIGINT">
+        <constraints nullable="false"
+                     foreignKeyName="fk_replies_user"
+                     references="users(id)"/>
+      </column>
+
+      <column name="comment_id" type="BIGINT">
+        <constraints nullable="false"
+                     foreignKeyName="fk_replies_comment"
+                     references="comments(id)"/>
+      </column>
+
+      <column name="is_deleted"
+              type="BOOLEAN"
+              defaultValueBoolean="false"/>
+
+      <column name="created_at"
+              type="TIMESTAMP"
+              defaultValueComputed="CURRENT_TIMESTAMP"/>
+    </createTable>
+  </changeSet>
+
+</databaseChangeLog>

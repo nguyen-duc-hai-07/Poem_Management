@@ -1,21 +1,18 @@
 spring:
   application:
-    name: oplearn-base
+    name: backend-poems
   jackson:
     property-naming-strategy: SNAKE_CASE
   datasource:
-    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/oplearn}
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/poems_db}
     username: ${POSTGRES_USER:postgres}
     password: ${POSTGRES_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
   data:
     redis:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD:}
-  jpa:
-    hibernate:
-      ddl-auto: none
-    open-in-view: false
   liquibase:
     change-log: classpath:db/master.xml
 
